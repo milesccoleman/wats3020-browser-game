@@ -10,7 +10,7 @@ class Player {
 
 // Tic Tac Toe Game Class
 class TicTacToe {
-    constructor(){
+    constructor() {
     	//create instances of players
     	this.player1 = new Player('fire'); 
     	this.player2 = new Player('sunglasses'); 
@@ -27,6 +27,7 @@ class TicTacToe {
 		this.currentPlayerToken = document.querySelector('#player-token'); 
 		this.gameboard = document.querySelector('#gameboard'); 
 		this.winScreen = document.querySelector('#win-screen'); 
+		this.winnerToken = document.querySelector('#winner-token'); 
 		this.drawScreen = document.querySelector('#draw-screen'); 
 		
     
@@ -82,24 +83,24 @@ class TicTacToe {
             }
         }
         this.moveCount++;
-        console.log(`Reviewed move ${this.moveCount}.`)
+        console.log('Reviewed move ${this.moveCount}')
         if (this.moveCount >= 9) {
-            console.log(`This game is a draw at ${this.moveCount} moves.`);
+            console.log('This game is a draw at ${this.moveCount} moves');
             this.gameStatus = 'draw';
-
+            
 			let drawEvent = new Event('draw'); 
-			document.dispatchEvent('drawEvent'); 
+			document.dispatchEvent(drawEvent); 
         }
     }
     recordMove(event){
     	let tileX = event.target.dataset.x; 
     	let tileY = event.target.dataset.y; 
-    	this.gameState[tielX][tileY] = this.currentPlayer.token; 
-    	event.target.setAttribute('class', 'tile played glyphicon glyphicon-${this.currentPlayer.token}'); 
-    	console.log('move recorded');
+    	this.gameState[tileX][tileY] = this.currentPlayer.token; 
+    	event.target.setAttribute('class', 'glyphicon glyphicon-${this.currentPlayer.token}'); 
+    	console.log('move has been recorded');
     }
     switchPlayer(){
-    	if (this.currentPlayer === this.player1){
+    	if (this.currentPlayer === this.player1) {
     		this.currentPlayer = this.player2; 
     		console.log('player switched'); 
     	} else {
@@ -114,14 +115,14 @@ class TicTacToe {
     		console.log('tile listeners initiated'); 
     	}
     }
-    showWinScreen(){
+    showWinScreen() {
  		this.winScreen.setAttribute('class', 'show'); 
- 		this.winnerToken.setAttribute('class', 'glyphicon${this.winner.token}'); 
+ 		this.winnerToken.setAttribute('class', 'glyphicon glyphicon-${this.winner.token}'); 
     }
-    showDrawScreen(){
+    showDrawScreen() {
   		this.drawScreen.setAttribute('class', 'show'); 
     }
-    setUpBoard(){
+    setUpBoard() {
     	this.gameboard.innerHTML = ''; 
     	for (let i=0; i<3; i++) {
     		let newRow = document.createElement('div'); 
@@ -135,7 +136,7 @@ class TicTacToe {
     		newTile.setAttribute('class', 'tile glyphicon glyphicon-question-sign'); 
     		newTile.dataset.x = i; 
     		newTile.dataset.y = j; 
-    		newCol.appendChild(newTile; 
+    		newCol.appendChild(newTile); 
     		newRow.appendChild(newCol); 
     		}
     	this.gameboard.appendChild(newRow); 
@@ -143,13 +144,13 @@ class TicTacToe {
     }
     this.setUpTileListeners(); 
 }
-    initializeMovePrompt(){
+    initializeMovePrompt() {
     	this.startPrompt.setAttribute('class', 'hidden'); 
     	this.movePrompt.setAttribute('class', ''); 
     	this.currentPlayer = this.player1;
     	console.log('move prompt initiated'); 
     }
-    start(){
+    start() {
     	this.setUpBoard(); 
     	this.initializeMovePrompt(); 
 
@@ -165,14 +166,14 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		console.log('game started'); 
 	}); 
 }); 
-document.addEventListener('win', function(event){
+document.addEventListener('win', function(event) {
 	game.showWinScreen(); 
 	console.log('win event');
 }); 
 document.addEventListener('draw', function(event) {
 	game.showDrawScreen();
 	console.log('draw event'); 
-})
+});
 
 // External function for event listeners provided for you.
 function handleMove(event){
