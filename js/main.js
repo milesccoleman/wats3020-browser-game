@@ -64,16 +64,16 @@ class TicTacToe {
     // This `checkForWinner()` method is provided for you, but you must fill in
     // the event dispatch lines that cause the end game screens to show.
     checkForWinner(){
-        for (let condition of this.winStates){
+        for (let condition of this.winStates) {
             let winningCondition = true;
-            for (let position of condition){
+            for (let position of condition) {
                 if (this.gameState[position[0]][position[1]] != this.currentPlayer.token) {
                     winningCondition = false;
                 }
             }
             if (winningCondition) {
                 console.log('We have a winner!');
-                console.log(`Condition is: ${condition}`);
+                console.log('Condition is: ' + condition);
                 this.gameStatus = 'won';
                 this.winner = this.currentPlayer;
 
@@ -83,30 +83,27 @@ class TicTacToe {
             }
         }
         this.moveCount++;
-        console.log('Reviewed move ${this.moveCount}')
         if (this.moveCount >= 9) {
-            console.log('This game is a draw at ${this.moveCount} moves');
             this.gameStatus = 'draw';
-            
 			let drawEvent = new Event('draw'); 
 			document.dispatchEvent(drawEvent); 
         }
     }
-    recordMove(event){
+    recordMove(event) {
     	let tileX = event.target.dataset.x; 
     	let tileY = event.target.dataset.y; 
     	this.gameState[tileX][tileY] = this.currentPlayer.token; 
-    	event.target.setAttribute('class', 'glyphicon glyphicon-${this.currentPlayer.token}'); 
+    	event.target.setAttribute('class', 'tile played glyphicon glyphicon-' + this.currentPlayer.token); 
     	console.log('move has been recorded');
     }
-    switchPlayer(){
+    switchPlayer() {
     	if (this.currentPlayer === this.player1) {
     		this.currentPlayer = this.player2; 
     		console.log('player switched'); 
     	} else {
     		this.currentPlayer = this.player1; 
     	}
-    	this.currentPlayerToken.setAttribute('class', 'glyphicon glyphicon-${this.currentPlayer.token}'); 
+    	this.currentPlayerToken.setAttribute('class', 'glyphicon glyphicon-' + this.currentPlayer.token); 
     }
     setUpTileListeners(){
     	let tileElements = document.querySelectorAll('.tile'); 
@@ -117,7 +114,7 @@ class TicTacToe {
     }
     showWinScreen() {
  		this.winScreen.setAttribute('class', 'show'); 
- 		this.winnerToken.setAttribute('class', 'glyphicon glyphicon-${this.winner.token}'); 
+ 		this.winnerToken.setAttribute('class', 'glyphicon glyphicon-' + this.winner.token); 
     }
     showDrawScreen() {
   		this.drawScreen.setAttribute('class', 'show'); 
@@ -131,8 +128,7 @@ class TicTacToe {
     	for (let j=0; j<3; j++) {
     		let newCol = document.createElement('div'); 
     		newCol.setAttribute('class', 'col-xs-3'); 
-    		
-    	let newTile = document.createElement('span'); 
+    		let newTile = document.createElement('span'); 
     		newTile.setAttribute('class', 'tile glyphicon glyphicon-question-sign'); 
     		newTile.dataset.x = i; 
     		newTile.dataset.y = j; 
